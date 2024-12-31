@@ -12,6 +12,11 @@ module.exports.createContact = async (event, context) => {
 
   if (!to || !from || !subject || !message) {
     return {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Origin": "*"
+      },
       statusCode: 400,
       body: JSON.stringify({message: " to or from...are not set properly"})
     }
@@ -33,6 +38,11 @@ module.exports.createContact = async (event, context) => {
     const command = new SendEmailCommand(params)
     await ses.send(command);
     return {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Origin": "*"
+      },
       statusCode: 200,
       body: JSON.stringify({message: "email sent successfully!",
         success: true
@@ -41,6 +51,11 @@ module.exports.createContact = async (event, context) => {
   } catch (error) {
     console.log(error)
     return {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Origin": "*"
+      },
       statusCode: 400,
       body: JSON.stringify({message: "The email failed to send",
         success: false
