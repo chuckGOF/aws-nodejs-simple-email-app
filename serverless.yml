@@ -1,0 +1,26 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: serverlessfg
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: aws-ses-email
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-west-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "ses:*"
+          Resource: 
+            - "*"
+
+functions:
+  create:
+    handler: handler.createContact
+    events:
+      - http:
+          path: /contact-us
+          method: post
+          cors: true
